@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Poképléx — Vente de cartes Pokémon</title>
+  <meta name="description" content="Poképléx — cartes Pokémon, réservation en ligne et paiement sur place." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#accueil" aria-label="Poképléx, accueil">
+      <span class="brand-ball">◉</span>
+      <span>Poké<span>pléx</span></span>
+    </a>
+    <nav class="main-nav" aria-label="Menu principal">
+      <a href="#accueil">Bienvenue</a>
+      <a href="#cartes">🃏 Cartes</a>
+      <a href="#raretés">⭐ Raretés</a>
+      <a href="#types">🔥 Types</a>
+      <a href="#ramassage">📍 Ramassage</a>
+      <a class="account-nav" href="#" id="accountBtn">👤 Mon compte</a>
+      <a class="admin-nav" href="admin.html">⚙️ Admin</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="accueil" class="hero-section">
+      <div class="hero-frame">
+        <img src="affiche.png" alt="Affiche Poképléx de vente de cartes Pokémon" class="hero-image" />
+      </div>
+      <div class="hero-copy">
+        <span class="eyebrow">POKÉPLÉX • MARKET LOCAL</span>
+        <h1>Bienvenue sur <span>Poképléx</span> !</h1>
+        <p>Choisis ta carte, réserve-la en ligne, puis viens la chercher et paie sur place.</p>
+        <div class="hero-actions">
+          <a class="primary-btn" href="#cartes">Voir les cartes</a>
+          <a class="secondary-btn" href="#ramassage">Voir le ramassage</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="how-section" aria-label="Comment ça marche">
+      <div class="step"><span>1</span><strong>Choisis</strong><small>une carte</small></div>
+      <div class="step"><span>2</span><strong>Réserve</strong><small>avec ton nom</small></div>
+      <div class="step"><span>3</span><strong>Viens</strong><small>au ramassage</small></div>
+      <div class="step"><span>4</span><strong>Paie</strong><small>comptant sur place</small></div>
+    </section>
+
+    <section id="cartes" class="catalog-section page-shell">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">🃏 COLLECTION</p>
+          <h2>Cartes disponibles</h2>
+          <p class="section-subtitle">Ajoute tes cartes depuis l’administration : la boutique se met à jour automatiquement.</p>
+        </div>
+        <div class="filters">
+          <input id="search" type="search" placeholder="Rechercher une carte…" aria-label="Rechercher une carte" />
+          <select id="statusFilter" aria-label="Filtrer">
+            <option value="available">Disponibles</option>
+            <option value="all">Toutes</option>
+            <option value="reserved">Réservées</option>
+            <option value="sold">Vendues</option>
+          </select>
+        </div>
+      </div>
+      <div id="cardsGrid" class="cards-grid"></div>
+      <div id="emptyState" class="empty-state hidden">Aucune carte ne correspond à ta recherche.</div>
+    </section>
+
+    <section id="raretés" class="info-section page-shell">
+      <div class="info-card rarity-card">
+        <p class="eyebrow">⭐ RARETÉS</p>
+        <h2>De la commune à la carte rare</h2>
+        <p>Le catalogue peut accueillir différents niveaux de rareté. Les informations de chaque carte sont ajoutées depuis l’administration.</p>
+        <div class="chips">
+          <span>Commune</span><span>Rare</span><span>Ultra Rare</span><span>Illustration Rare</span><span>Secrète Rare</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="types" class="info-section page-shell">
+      <div class="info-card types-card">
+        <p class="eyebrow">🔥 TYPES</p>
+        <h2>Trouve ton style de Pokémon</h2>
+        <p>Un espace visuel pour présenter les différents types de cartes de ta collection.</p>
+        <div class="type-grid">
+          <span>🔥 Feu</span><span>💧 Eau</span><span>⚡ Électrique</span><span>🌿 Plante</span>
+          <span>🧠 Psy</span><span>❄️ Glace</span><span>👊 Combat</span><span>🌑 Ténèbres</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="ramassage" class="pickup-section page-shell">
+      <div class="pickup-card">
+        <div>
+          <p class="eyebrow">📍 RAMASSAGE</p>
+          <h2>Paiement sur place</h2>
+          <p>Après ta réservation, viens chercher ta carte et paie en argent comptant.</p>
+        </div>
+        <div class="address-box">
+          <span>Adresse</span>
+          <strong>966 rue La Palme</strong>
+          <small>Québec, Saint-Lin</small>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="accountDialog" class="buy-dialog">
+    <div class="dialog-card account-dialog-card">
+      <button class="close-btn" type="button" id="closeAccountBtn" aria-label="Fermer">×</button>
+      <div id="accountLoggedOut">
+        <p class="eyebrow">COMPTE CLIENT</p>
+        <h2>Bienvenue sur Poképléx 👋</h2>
+        <p class="small-note">Crée ton compte avec ton adresse courriel et un mot de passe. Tu peux utiliser une adresse Gmail, iCloud, Yahoo ou toute autre adresse courriel.</p>
+        <div class="account-tabs">
+          <button class="tab-btn active" type="button" data-account-tab="login">Se connecter</button>
+          <button class="tab-btn" type="button" data-account-tab="signup">Créer un compte</button>
+        </div>
+
+        <form id="customerLoginForm" class="account-form">
+          <label>Adresse courriel
+            <input id="customerLoginEmail" type="email" autocomplete="email" required placeholder="exemple@gmail.com" />
+          </label>
+          <label>Mot de passe
+            <input id="customerLoginPassword" type="password" autocomplete="current-password" required minlength="6" placeholder="Au moins 6 caractères" />
+          </label>
+          <button class="primary-btn" type="submit">Se connecter</button>
+          <p id="customerLoginMessage" class="small-note"></p>
+        </form>
+
+        <form id="customerSignupForm" class="account-form hidden">
+          <label>Ton nom
+            <input id="customerSignupName" type="text" autocomplete="name" required maxlength="80" placeholder="Ex. Alex" />
+          </label>
+          <label>Adresse courriel
+            <input id="customerSignupEmail" type="email" autocomplete="email" required placeholder="exemple@gmail.com" />
+          </label>
+          <label>Mot de passe
+            <input id="customerSignupPassword" type="password" autocomplete="new-password" required minlength="6" placeholder="Au moins 6 caractères" />
+          </label>
+          <button class="primary-btn" type="submit">Créer mon compte</button>
+          <p id="customerSignupMessage" class="small-note"></p>
+        </form>
+      </div>
+
+      <div id="accountLoggedIn" class="hidden">
+        <p class="eyebrow">MON COMPTE</p>
+        <h2>Bonjour, <span id="customerDisplayName">client</span> 👋</h2>
+        <p id="customerEmailDisplay" class="small-note"></p>
+        <div class="account-info">
+          <strong>Tu es connecté.</strong>
+          <span>Tu peux maintenant réserver tes cartes plus facilement.</span>
+        </div>
+        <button id="customerLogoutBtn" class="secondary-btn" type="button">Se déconnecter</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="buyDialog" class="buy-dialog">
+    <form method="dialog" class="dialog-card" id="buyForm">
+      <button class="close-btn" value="cancel" aria-label="Fermer">×</button>
+      <p class="eyebrow">RÉSERVER</p>
+      <h2 id="dialogTitle">Je vais l’acheter</h2>
+      <p id="dialogPrice" class="dialog-price"></p>
+      <input type="hidden" id="dialogProductId" />
+      <label>Ton nom
+        <input id="buyerName" required maxlength="80" placeholder="Ex. Alex" />
+      </label>
+      <label>Ton numéro de téléphone
+        <input id="buyerPhone" required maxlength="40" placeholder="Ex. 514-555-1234" />
+      </label>
+      <button id="reserveBtn" class="primary-btn" type="submit">Confirmer la réservation</button>
+      <p class="small-note">Tu dois être connecté à ton compte Poképléx pour confirmer une réservation. Tu paieras en argent comptant lors du ramassage.</p>
+    </form>
+  </dialog>
+
+  <dialog id="successDialog" class="buy-dialog">
+    <div class="dialog-card">
+      <p class="eyebrow">RÉSERVATION ENREGISTRÉE</p>
+      <h2>Parfait ! 🎉</h2>
+      <p id="successText"></p>
+      <div class="address-box"><span>Ramassage</span><strong>966 rue La Palme</strong><small>Québec, Saint-Lin</small></div>
+      <button class="primary-btn" onclick="document.getElementById('successDialog').close()">OK</button>
+    </div>
+  </dialog>
+
+  <footer class="footer">
+    <strong>Poképléx</strong>
+    <span>Cartes Pokémon • Réservation • Paiement sur place</span>
+    <a href="admin.html">Administration</a>
+    <span>© <span id="year"></span></span>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
