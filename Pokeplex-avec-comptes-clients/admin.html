@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Poképléx — Administration</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="admin-page">
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="brand-ball">◉</span><span>Poké<span>pléx</span></span></a>
+    <a class="secondary-btn" href="index.html">← Retour au site</a>
+  </header>
+
+  <main class="admin-shell">
+    <div class="admin-top">
+      <span class="eyebrow">ESPACE PRIVÉ</span>
+      <span id="authState"></span>
+    </div>
+
+    <section id="loginPanel" class="admin-card login-card">
+      <div class="admin-icon">⚙️</div>
+      <p class="eyebrow">COMPTE ADMINISTRATEUR</p>
+      <h1>Gérer Poképléx</h1>
+      <p>Seul ton compte administrateur doit pouvoir ajouter, modifier ou supprimer des cartes.</p>
+      <form id="loginForm">
+        <label>Courriel
+          <input id="email" type="email" autocomplete="username" required />
+        </label>
+        <label>Mot de passe
+          <input id="password" type="password" autocomplete="current-password" required />
+        </label>
+        <button class="primary-btn" type="submit">Se connecter</button>
+        <p id="loginError" class="error-text"></p>
+      </form>
+    </section>
+
+    <section id="dashboard" class="hidden">
+      <div class="admin-card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">GESTION</p>
+            <h1>Mes cartes</h1>
+            <p class="section-subtitle">Ajoute une photo, un prix et une description.</p>
+          </div>
+          <button id="logoutBtn" class="secondary-btn">Se déconnecter</button>
+        </div>
+
+        <form id="productForm" class="product-form">
+          <input type="hidden" id="editingId" />
+          <label>Nom de la carte
+            <input id="productName" required maxlength="120" placeholder="Ex. Pikachu 123/456" />
+          </label>
+          <label>Prix (CAD)
+            <input id="productPrice" required type="number" min="0" step="0.01" placeholder="50.00" />
+          </label>
+          <label>Photo de la carte
+            <input id="productImage" type="file" accept="image/*" />
+          </label>
+          <label>Description (facultatif)
+            <textarea id="productDescription" rows="3" maxlength="500" placeholder="État, série, particularités…"></textarea>
+          </label>
+          <div class="form-actions">
+            <button class="primary-btn" type="submit" id="saveBtn">Ajouter la carte</button>
+            <button class="secondary-btn" type="button" id="cancelEditBtn">Annuler</button>
+          </div>
+          <p id="formMessage" class="small-note"></p>
+        </form>
+      </div>
+
+      <div class="admin-card">
+        <div class="section-heading"><div><p class="eyebrow">CATALOGUE</p><h2>Cartes publiées</h2></div></div>
+        <div id="adminProducts" class="admin-products"></div>
+      </div>
+
+      <div class="admin-card">
+        <div class="section-heading"><div><p class="eyebrow">CLIENTS</p><h2>Réservations</h2></div></div>
+        <div id="reservations" class="reservations"></div>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="admin.js"></script>
+</body>
+</html>

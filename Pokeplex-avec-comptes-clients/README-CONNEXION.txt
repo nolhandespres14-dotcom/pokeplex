@@ -1,0 +1,1 @@
+Connexion Admin Supabase ajoutée. Le mot de passe n'est jamais stocké dans le fichier. Le compte existant est utilisé via Supabase Auth.
