@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Poképléx — Vente de cartes Pokémon</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#16213e}
+header{background:linear-gradient(135deg,#123c78,#1e63b6);color:white;padding:28px 6%;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.logo{font-size:30px;font-weight:900}.logo span{color:#ffd52a}nav a{color:#fff;text-decoration:none;margin:0 10px;font-weight:700}
+.hero{padding:55px 6%;background:linear-gradient(135deg,#eaf4ff,#fff);text-align:center}
+.hero h1{font-size:clamp(36px,6vw,68px);margin:0 0 12px;color:#123c78}.hero p{font-size:20px}
+.controls{padding:24px 6%;display:flex;gap:12px;flex-wrap:wrap}.controls input,.controls select{padding:13px 15px;border:1px solid #ccd5e3;border-radius:12px;background:white}
+.grid{padding:10px 6% 60px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px}
+.card{background:white;border-radius:18px;overflow:hidden;box-shadow:0 8px 25px #18365c18;border:1px solid #e3e9f2}
+.card img{width:100%;height:260px;object-fit:contain;background:#eef4fb}.info{padding:16px}.info h3{margin:0 0 8px}.tag{display:inline-block;background:#eaf2ff;color:#1d5ea8;border-radius:20px;padding:5px 9px;font-size:12px;font-weight:800}.price{font-size:23px;font-weight:900;margin:12px 0}.btn{border:0;border-radius:10px;padding:11px 15px;font-weight:800;cursor:pointer;background:#ffd52a;color:#17223b}.btn:hover{filter:brightness(.96)}
+footer{padding:30px 6%;background:#12233f;color:#fff;text-align:center}
+.empty{padding:40px;text-align:center;color:#667}
+</style>
+</head>
+<body>
+<header><div class="logo">Poké<span>pléx</span> 🃏</div><nav><a href="#accueil">Bienvenue</a><a href="#boutique">Cartes</a><a href="#nouveautes">Nouveautés</a><a href="#favoris">❤️ Favoris</a><a href="#panier">🛒 Panier (<span id="count">0</span>)</a><a href="#adresse">📍 Nous trouver</a></nav></header>
+<section id="accueil" class="hero"><h1>Bienvenue sur Poképléx</h1><p>Découvre nos cartes Pokémon • cartes rares • cartes scellées</p></section>
+<section class="controls">
+<input id="search" placeholder="🔎 Rechercher une carte...">
+<select id="rarity"><option value="">Toutes les raretés</option><option>Commune</option><option>Rare</option><option>Ultra Rare</option><option>Secrète Rare</option></select>
+</section>
+<main id="boutique" class="grid"></main><section id="nouveautes" class="hero"><h2>✨ Nouveautés</h2><p>Les nouvelles cartes arrivent bientôt.</p></section><section id="favoris" class="hero"><h2>❤️ Favoris</h2><p>Ajoute tes cartes préférées ici.</p></section>
+<section id="panier" class="hero"><h2>🛒 Ton panier</h2><div id="cart" class="empty">Ton panier est vide.</div></section>
+<section id="adresse" class="hero"><h2>📍 Nous trouver</h2><p><strong>966 rue Lapalme</strong></p><p>Ramassage des cartes sur place.</p></section><footer>Poképléx — boutique de cartes Pokémon</footer>
+<script>
+const cards=[
+{name:"Carte Pokémon 1",price:5,rarity:"Commune",image:"assets/carte-1.jpg"},
+{name:"Carte Pokémon 2",price:10,rarity:"Rare",image:"assets/carte-2.jpg"},
+{name:"Carte Pokémon 3",price:25,rarity:"Ultra Rare",image:"assets/carte-3.jpg"}
+];
+let cart=[];
+const grid=document.querySelector('#boutique'), search=document.querySelector('#search'), rarity=document.querySelector('#rarity');
+function render(){
+ const q=search.value.toLowerCase(), r=rarity.value;
+ const list=cards.filter(c=>(c.name.toLowerCase().includes(q)||c.rarity.toLowerCase().includes(q))&&(!r||c.rarity===r));
+ grid.innerHTML=list.length?list.map((c,i)=>`<article class="card"><img src="${c.image}" alt="${c.name}" onerror="this.style.opacity='.15'"><div class="info"><span class="tag">${c.rarity}</span><h3>${c.name}</h3><div class="price">${c.price.toFixed(2)} $ CAD</div><button class="btn" onclick="add(${i})">Ajouter au panier</button></div></article>`).join(''):'<div class="empty">Aucune carte trouvée.</div>';
+}
+function add(i){cart.push(cards[i]);document.querySelector('#count').textContent=cart.length;renderCart()}
+function renderCart(){
+ const el=document.querySelector('#cart');
+ if(!cart.length){el.textContent='Ton panier est vide.';return}
+ const total=cart.reduce((s,c)=>s+c.price,0);
+ el.innerHTML=cart.map((c,i)=>`${c.name} — ${c.price.toFixed(2)} $ <button class="btn" onclick="cart.splice(${i},1);document.querySelector('#count').textContent=cart.length;renderCart()">Retirer</button>`).join('<br><br>')+`<hr><strong>Total : ${total.toFixed(2)} $ CAD</strong>`;
+}
+search.oninput=render;rarity.onchange=render;render();
+</script>
+</body>
+</html>
